@@ -11,3 +11,11 @@
 - Run the app. 
 - Set your web browser to ```localhost:8080```
 ![Screenshot 2023-05-09 at 3.30.53 PM.png](..%2F..%2F..%2F..%2F..%2F..%2Fvar%2Ffolders%2F81%2Fj5zsysc121sgvg8j1rjhrg8w0000gn%2FT%2FTemporaryItems%2FNSIRD_screencaptureui_Oo4zys%2FScreenshot%202023-05-09%20at%203.30.53%20PM.png)
+
+
+
+## 5/9/23
+
+- Got the bare minimum done on my page by following along with the lecture. Ran out of time for the day.
+- Go back and debug on 5/10/23.
+- Still need to add 404 page, Post Entity, and add user profile image.
