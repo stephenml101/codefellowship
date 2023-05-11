@@ -1,23 +1,18 @@
 package com.codefellowship.codefellowship.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.time.LocalDate;
 import java.util.Collection;
-
-
+import java.util.List;
 
 @Entity
 public class ApplicationUser implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
-
+    @Column(unique=true)
     private String username;
     private String password;
     private String firstName;
@@ -25,20 +20,22 @@ public class ApplicationUser implements UserDetails {
     private LocalDate dateOfBirth;
     private String bio;
 
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    private List<Post> posts;
 
+    // Constructors
     public ApplicationUser() {}
 
-    public ApplicationUser(String username, String password, String firstName, String lastName, LocalDate dateOfBirth, String bio ) {
+    public ApplicationUser(String username, String password, String firstName, String lastName, LocalDate dateOfBirth, String bio) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.bio = bio;
-
-
     }
 
+    // UserDetails Overrides
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
@@ -64,6 +61,12 @@ public class ApplicationUser implements UserDetails {
         return true;
     }
 
+    // Methods
+    public void addPost(Post post) {
+        post.setApplicationUser(this);
+        posts.add(post);
+    }
+
     // Getters and Setters
     public long getId() {
         return id;
@@ -73,6 +76,7 @@ public class ApplicationUser implements UserDetails {
         this.id = id;
     }
 
+    @Override
     public String getUsername() {
         return username;
     }
@@ -118,16 +122,15 @@ public class ApplicationUser implements UserDetails {
         return bio;
     }
 
-    @Override
-    public String toString() {
-        return "ApplicationUser{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", dateOfBirth=" + dateOfBirth +
-                ", bio='" + bio + '\'' +
-                '}';
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 }
