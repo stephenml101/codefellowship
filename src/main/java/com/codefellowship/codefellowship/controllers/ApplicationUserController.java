@@ -116,7 +116,7 @@ public class ApplicationUserController {
     }
 
     @PostMapping("/createPost")
-    public RedirectView createPost(Principal p, String body,long id, RedirectAttributes redir) {
+    public RedirectView createPost(Principal p, Model m, String body,long id, RedirectAttributes redir) {
         ApplicationUser user = applicationUserRepository.findById(id).orElseThrow();
         if(p != null) {
             Date date = new Date();
@@ -124,6 +124,9 @@ public class ApplicationUserController {
             user.addPost(post);
             postRepository.save(post);
             applicationUserRepository.save(user);
+            // TODO: Lab 18: Add usersIfollow and usersWhoFollowMe to the HTML page to be consumed
+//            m.addAttribute("usersIFollow", viewUser.getUsersIFollow());
+//            m.addAttribute("usersWhoFollowMe", viewUser.getUsersWhoFollowMe());
         } else {
             redir.addFlashAttribute("errorMessage", "You are not permitted to add posts to this profile!");
         }
@@ -141,5 +144,27 @@ public class ApplicationUserController {
             return "redirect:/login";
         }
     }
+    // TODO: Lab 18: Finish code and debug
+//    @PutMapping("/follow-user/{id}")
+//    public RedirectView followUser(Principal p, @PathVariable Long id) {
+//        ApplicationUser userToFollow = applicationUserRepository.findById(id).orElseThrow(() -> new RuntimeException("Error reading " +
+//                "user from the databsae with ID of: " + id));
+//        ApplicationUser browsingUser = applicationUserRepository.findUserByUsername(p.getName());
+//
+//        // check that the user isn't trying to follow themselves
+//        if(browsingUser.getUsername().equals(userToFollow.getUsername())) {
+//            throw new IllegalArgumentException("Following yourself is a bad idea!");
+//        }
+//
+//        // access followers from browsingUser and update with new userToFollow
+//        browsingUser.getUsersIFollow().add(userToFollow);
+//
+//
+//        // save to the db
+//        applicationUserRepository.save(browsingUser);
+//
+//
+//        return new RedirectView("/user/" + id);
+//    }
 
 }
