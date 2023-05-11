@@ -11,7 +11,7 @@
 <header>
     <nav>
         <a href="/">Home</a>
-        <span th:if="${username">
+        <span th:if="${username}">
       <span class="username">Hello, <span th:text="${username}"></span></span>
       <form action="/logout" method="post" style="display:inline;">
         <input type="submit" value="Logout">

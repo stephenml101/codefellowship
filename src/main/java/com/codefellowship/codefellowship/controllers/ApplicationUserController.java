@@ -66,7 +66,7 @@ public class ApplicationUserController {
             System.out.println("Error while logging in!");
             e.printStackTrace();
         }
-
+    }
         @GetMapping("/users/{id}")
         public String getUserInfoPage(Model m, Principal p, @PathVariable long id) {
             if(p != null) { //not strictly needed if WebSecurityConfig is set up properly
@@ -96,7 +96,7 @@ public class ApplicationUserController {
                         userToBeEdited.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } else {
-                redir.addFlashAttribute("errorMessage", "Cannont edit another user's page!");
+                redir.addFlashAttribute("errorMessage", "Can't edit another user's page!");
             }
 
             return new RedirectView("/users/"+id);
@@ -117,5 +117,5 @@ public class ApplicationUserController {
 
             return new RedirectView("/");
         }
-    }
+
 }
